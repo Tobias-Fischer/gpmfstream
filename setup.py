@@ -85,7 +85,8 @@ class BuildExt(build_ext):
         opts = self.c_opts.get(ct, [])
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
-            opts.append(cpp_flag(self.compiler))
+            if sys.platform != 'darwin':
+                opts.append(cpp_flag(self.compiler))
             if has_flag(self.compiler, '-fvisibility=hidden'):
                 opts.append('-fvisibility=hidden')
         elif ct == 'msvc':
